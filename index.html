@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Maylas Bridal | Fundado por May & Lay</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- HEADER -->
+
+<header>
+
+    <div class="logo">
+        <h1>Maylas Bridal</h1>
+        <p>Fundado por May & Lay</p>
+    </div>
+
+    <nav>
+        <a href="#catalogo">Coleção</a>
+        <a href="#maisvendidos">Favoritos</a>
+        <a href="#faq">FAQ</a>
+        <a href="#login">Entrar ✦</a>
+    </nav>
+
+</header>
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="hero-text">
+
+        <h2>
+            Vestidos de noiva para histórias escritas à luz da lua.
+        </h2>
+
+        <p>
+            Elegância etérea, romantismo clássico e vestidos feitos para momentos eternos.
+        </p>
+
+        <a href="#catalogo" class="btn">
+            Explorar Coleção
+        </a>
+
+    </div>
+
+</section>
+<!-- LOGIN -->
+
+<section id="login" class="login">
+
+    <h2>Minha Conta ✦</h2>
+    
+    <div class="login-box">
+    
+    <input
+    type="email"
+    placeholder="Seu email"
+    id="email">
+    
+    <input
+    type="password"
+    placeholder="Senha"
+    id="senha">
+    
+    <button onclick="login()">
+    Entrar
+    </button>
+    
+    <button
+    onclick="cadastro()"
+    class="cadastro-btn">
+    
+    Criar Conta
+    
+    </button>
+    
+    </div>
+    
+    </section>
+<!-- PESQUISA -->
+
+<section class="pesquisa">
+
+    <h2>Encontre seu vestido ✦</h2>
+
+    <input
+        type="text"
+        id="pesquisa"
+        placeholder="nome ou estilo..."
+    >
+
+</section>
+
+<!-- FAVORITOS -->
+
+<section id="maisvendidos">
+
+    <h2>Favoritos ✦</h2>
+
+    <div class="produtos">
+
+        <div class="card">
+            <img src="imagens/vestido1.jpeg" alt="Moonveil">
+            <h3>New Moon</h3>
+            <p class="categoria">Noiva Celestial</p>
+            <p class="preco">R$ 4.900</p>
+            <button onclick="adicionarCarrinho('New Moon',4900)">
+                Adicionar
+            </button>
+        </div>
+
+        <div class="card">
+            <img src="imagens/vestido2.jpeg" alt="Ivory Moon">
+            <h3>Ariel Lace</h3>
+            <p class="categoria">Sereia da Lua</p>
+            <p class="preco">R$ 3.500</p>
+            <button onclick="adicionarCarrinho('Ariel Lace',5400)">
+                Adicionar
+            </button>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- CATÁLOGO -->
+
+<section id="catalogo">
+
+<h2>Coleção Bridal ✦</h2>
+
+<div class="produtos">
+
+<div class="card">
+<img src="imagens/vestido1.jpeg" alt="">
+<h3>New Moon</h3>
+<p class="categoria">Noiva Celestial</p>
+<p class="preco">R$ 4.900</p>
+<button onclick="adicionarCarrinho('New Moon',4900)">
+Adicionar
+</button>
+</div>
+
+<div class="card">
+<img src="imagens/vestido2.jpeg" alt="">
+<h3>Ariel Lace</h3>
+<p class="categoria">Sereia da lua</p>
+<p class="preco">R$ 3.500</p>
+<button onclick="adicionarCarrinho('Ariel Lace',5400)">
+Adicionar
+</button>
+</div>
+
+<div class="card">
+<img src="imagens/vestido3.jpeg" alt="">
+<h3>Aurora Lace</h3>
+<p class="categoria">Renda Vintage</p>
+<p class="preco">R$ 4.500</p>
+<button onclick="adicionarCarrinho('Aurora Lace',5200)">
+Adicionar
+</button>
+</div>
+
+<div class="card">
+<img src="imagens/vestido4.jpeg" alt="">
+<h3>Celestia</h3>
+<p class="categoria">Cisney Rendado</p>
+<p class="preco">R$ 3.100</p>
+<button onclick="adicionarCarrinho('Celestia',6100)">
+Adicionar
+</button>
+</div>
+
+<div class="card">
+<img src="imagens/vestido5.jpeg" alt="">
+<h3>Queen Garden</h3>
+<p class="categoria">Luxo fatal</p>
+<p class="preco">R$ 5.800</p>
+<button onclick="adicionarCarrinho('Queen Bride',5600)">
+Adicionar
+</button>
+</div>
+
+<div class="card">
+<img src="imagens/vestido6.jpeg" alt="">
+<h3>Princess Bride</h3>
+<p class="categoria">Romântico Clássico</p>
+<p class="preco">R$ 4.700</p>
+<button onclick="adicionarCarrinho('princess Bride',6400)">
+Adicionar
+</button>
+</div>
+
+<div class="card">
+<img src="imagens/vestido7.jpeg" alt="">
+<h3> Angel Bride</h3>
+<p class="categoria">Anjo floral</p>
+<p class="preco">R$ 4.000</p>
+<button onclick="adicionarCarrinho('Angel Bride',6800)">
+Adicionar
+</button>
+</div>
+
+<div class="card">
+<img src="imagens/vestido8.jpeg" alt="">
+<h3>Midnight Pearl</h3>
+<p class="categoria">Noiva Mística</p>
+<p class="preco">R$ 4.500</p>
+<button onclick="adicionarCarrinho('Midnight Pearl',7200)">
+Adicionar
+</button>
+</div>
+
+</div>
+
+</section>
+
+<!-- CARRINHO -->
+
+<section class="carrinho">
+
+    <h2>Seu Pedido ✦</h2>
+
+    <ul id="listaCarrinho"></ul>
+
+    <h3 id="total">
+        Total: R$ 0
+    </h3>
+
+</section>
+
+<!-- FAQ -->
+
+<section id="faq">
+
+<h2>FAQ ✦</h2>
+
+<div class="faq-item">
+<h3>Fazem vestidos sob medida?</h3>
+<p>Sim, criamos modelos exclusivos e personalizados.</p>
+</div>
+
+<div class="faq-item">
+<h3>Qual o prazo?</h3>
+<p>O prazo depende do modelo e da personalização.</p>
+</div>
+
+<div class="faq-item">
+<h3>Como funciona a encomenda?</h3>
+<p>O atendimento e orçamento acontecem pelo WhatsApp.</p>
+</div>
+
+</section>
+
+<!-- CONTATO -->
+
+<section class="contato">
+
+<h2>Deseja um vestido exclusivo?</h2>
+
+<a
+class="whats"
+href="https://wa.me/5511987595486?text=Olá! Vim pelo Maylas Bridal e gostaria de conversar sobre um vestido de noiva."
+target="_blank">
+
+Agendar Atendimento ✦
+
+</a>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+
+<p>
+© 2026 Maylas Bridal | Fundado por May & Lay
+</p>
+
+</footer>
+
+<script type="module" src="script.js"></script>
+
+</body>
+</html>
