@@ -1,182 +1,502 @@
 // FIREBASE
 
-import { initializeApp }
-
-from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
 
 import {
-getAuth,
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword
-}
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 
-from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
-
-// CONFIG FIREBASE
+// CONFIG
 
 const firebaseConfig = {
-
-apiKey: "AIzaSyDKqUt7ETARoGgHvPknJc4_vQquUq-w3Nk",
-
-authDomain: "maylas.firebaseapp.com",
-
-projectId: "maylas",
-
-storageBucket: "maylas.firebasestorage.app",
-
-messagingSenderId: "380946945069",
-
-appId: "1:380946945069:web:7f365ec4559548db91d4a4",
-
-measurementId: "G-C9NJBHLLNZ"
-
+    apiKey: "AIzaSyDKqUt7ETARoGgHvPknJc4_vQquUq-w3Nk",
+    authDomain: "maylas.firebaseapp.com",
+    projectId: "maylas",
+    storageBucket: "maylas.firebasestorage.app",
+    messagingSenderId: "380946945069",
+    appId: "1:380946945069:web:7f365ec4559548db91d4a4",
+    measurementId: "G-C9NJBHLLNZ"
 };
 
-// INICIAR FIREBASE
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-const app =
-initializeApp(firebaseConfig);
-
-const auth =
-getAuth(app);
-
-// CARRINHO
+// VARIÁVEIS
 
 let carrinho = [];
+let favoritos = [];
+let pedidos = [];
 let total = 0;
+let usuarioAtual = null;
+let vestidoModalAtual = null;
 
-// ADICIONAR AO CARRINHO
+// DETALHES DOS VESTIDOS
 
-window.adicionarCarrinho =
-function(nome, preco){
+const vestidosDetalhes = {
+    "New Moon":{
+        categoria:"Noiva Celestial",
+        preco:4900,
+        descricao:"Vestido etéreo inspirado na lua nova.",
+        imagens:[
+            "imagens/vestido1.jpeg",
+            "imagens/vestido1-2.jpeg",
+            "imagens/vestido1-3.jpeg"
+        ]
+    },
 
-carrinho.push({
-nome:nome,
-preco:preco
-});
+    "Ariel Lace":{
+        categoria:"Sereia da Lua",
+        preco:3500,
+        descricao:"Silhueta sereia delicada e elegante.",
+        imagens:[
+            "imagens/vestido2.jpeg",
+            "imagens/vestido2-2.jpeg",
+            "imagens/vestido2-3.jpeg"
+        ]
+    },
 
-total += preco;
+    "Aurora Lace":{
+        categoria:"Renda Vintage",
+        preco:4500,
+        descricao:"Renda clássica com romantismo atemporal.",
+        imagens:[
+            "imagens/vestido3.jpeg",
+            "imagens/vestido3-2.jpeg",
+            "imagens/vestido3-3.jpeg"
+        ]
+    },
 
-atualizarCarrinho();
+    "Celestia":{
+        categoria:"Cisney Rendado",
+        preco:3100,
+        descricao:"Leveza celestial e acabamento sofisticado.",
+        imagens:[
+            "imagens/vestido4.jpeg",
+            "imagens/vestido4-2.jpeg",
+            "imagens/vestido4-3.jpeg"
+        ]
+    },
 
-}
+    "Queen Garden":{
+        categoria:"Luxo fatal",
+        preco:5800,
+        descricao:"Inspirado em jardins reais e romantismo dramático.",
+        imagens:[
+            "imagens/vestido5.jpeg",
+            "imagens/vestido5-2.jpeg",
+            "imagens/vestido5-3.jpeg"
+        ]
+    },
 
-// ATUALIZAR
+    "Princess Bride":{
+        categoria:"Romântico Clássico",
+        preco:4700,
+        descricao:"Modelo princesa delicado e elegante.",
+        imagens:[
+            "imagens/vestido6.jpeg",
+            "imagens/vestido6-2.jpeg",
+            "imagens/vestido6-3.jpeg"
+        ]
+    },
 
-function atualizarCarrinho(){
+    "Angel Bride":{
+        categoria:"Anjo floral",
+        preco:4000,
+        descricao:"Vestido angelical com delicadeza floral.",
+        imagens:[
+            "imagens/vestido7.jpeg",
+            "imagens/vestido7-2.jpeg",
+            "imagens/vestido7-3.jpeg"
+        ]
+    },
 
-const lista =
-document.getElementById("listaCarrinho");
-
-const totalTexto =
-document.getElementById("total");
-
-lista.innerHTML = "";
-
-carrinho.forEach(item => {
-
-let li =
-document.createElement("li");
-
-li.innerHTML =
-`${item.nome} ✦ R$ ${item.preco.toLocaleString('pt-BR')}`;
-
-lista.appendChild(li);
-
-});
-
-totalTexto.innerHTML =
-`Total: R$ ${total.toLocaleString('pt-BR')}`;
-
-}
+    "Midnight Pearl":{
+        categoria:"Noiva Mística",
+        preco:4500,
+        descricao:"Elegância misteriosa inspirada na meia-noite.",
+        imagens:[
+            "imagens/vestido8.jpeg",
+            "imagens/vestido8-2.jpeg",
+            "imagens/vestido8-3.jpeg"
+        ]
+    }
+};
 
 // LOGIN
 
-window.login = function(){
+onAuthStateChanged(auth, (user) => {document.getElementById("perfilEmail").innerHTML =
+    "Cliente conectada: " + usuarioAtual;
+    if(user){
+        usuarioAtual = user.email;
 
+        document.getElementById("mensagemLogin").innerHTML =
+        `Conta conectada: ${usuarioAtual} ✦`;
+
+        carregarCarrinho();
+        carregarFavoritos();
+        carregarPedidos();
+    }else{document.getElementById("perfilEmail").innerHTML =
+        "Entre na sua conta para ver seu perfil.";
+        usuarioAtual = null;
+
+        document.getElementById("mensagemLogin").innerHTML =
+        "Nenhuma conta conectada.";
+    }
+});
+
+window.cadastro = function(){
     let email = document.getElementById("email").value.trim();
     let senha = document.getElementById("senha").value.trim();
 
-    if(email === "" || !email.includes("@")){
-        alert("Digite um email válido, exemplo: teste@gmail.com");
-        return;
-    }
-
-    if(senha.length < 6){
-        alert("A senha precisa ter no mínimo 6 caracteres.");
-        return;
-    }
-
-    signInWithEmailAndPassword(auth, email, senha)
+    createUserWithEmailAndPassword(auth,email,senha)
     .then(() => {
-        alert("Login realizado ✦");
+        document.getElementById("mensagemLogin").innerHTML =
+        "Conta criada com sucesso ✦";
     })
     .catch((error) => {
-        alert("Erro: " + error.code);
+        document.getElementById("mensagemLogin").innerHTML =
+        "Erro: " + error.code;
     });
 }
 
-window.cadastro = function(){
-
+window.login = function(){
     let email = document.getElementById("email").value.trim();
     let senha = document.getElementById("senha").value.trim();
 
-    if(email === "" || !email.includes("@")){
-        alert("Digite um email válido, exemplo: teste@gmail.com");
-        return;
-    }
-
-    if(senha.length < 6){
-        alert("A senha precisa ter no mínimo 6 caracteres.");
-        return;
-    }
-
-    createUserWithEmailAndPassword(auth, email, senha)
+    signInWithEmailAndPassword(auth,email,senha)
     .then(() => {
-        alert("Conta criada ✦");
+        document.getElementById("mensagemLogin").innerHTML =
+        "Conta conectada ✦";
     })
     .catch((error) => {
-        alert("Erro: " + error.code);
+        document.getElementById("mensagemLogin").innerHTML =
+        "Erro: " + error.code;
     });
+}
+
+window.sair = function(){
+    signOut(auth)
+    .then(() => {
+        usuarioAtual = null;
+        carrinho = [];
+        favoritos = [];
+        total = 0;
+
+        atualizarCarrinho();
+        atualizarFavoritos();
+
+        document.getElementById("mensagemLogin").innerHTML =
+        "Você saiu da conta ✦";
+    });
+}
+
+// CARRINHO
+
+window.adicionarCarrinho = function(nome, preco){
+    carrinho.push({
+        nome:nome,
+        preco:preco
+    });
+
+    total += preco;
+
+    atualizarCarrinho();
+    salvarCarrinho();
+}
+
+function atualizarCarrinho(){
+    const lista = document.getElementById("listaCarrinho");
+    const totalTexto = document.getElementById("total");
+
+    lista.innerHTML = "";
+
+    carrinho.forEach(item => {
+        let li = document.createElement("li");
+
+        li.innerHTML =
+        `${item.nome} ✦ R$ ${item.preco.toLocaleString("pt-BR")}`;
+
+        lista.appendChild(li);
+    });
+
+    totalTexto.innerHTML =
+    `Total: R$ ${total.toLocaleString("pt-BR")}`;
+}
+
+function salvarCarrinho(){
+    if(usuarioAtual){
+        localStorage.setItem(
+            "carrinho_" + usuarioAtual,
+            JSON.stringify(carrinho)
+        );
+    }
+}
+
+function carregarCarrinho(){
+    let dados = localStorage.getItem("carrinho_" + usuarioAtual);
+
+    if(dados){
+        carrinho = JSON.parse(dados);
+
+        total = carrinho.reduce((soma,item)=>{
+            return soma + item.preco;
+        },0);
+
+        atualizarCarrinho();
+    }
+}
+
+// FAVORITOS
+
+window.favoritar = function(nome){
+    if(!favoritos.includes(nome)){
+        favoritos.push(nome);
+    }
+
+    salvarFavoritos();
+    atualizarFavoritos();
+}
+
+function salvarFavoritos(){
+    if(usuarioAtual){
+        localStorage.setItem(
+            "favoritos_" + usuarioAtual,
+            JSON.stringify(favoritos)
+        );
+    }
+}
+
+function carregarFavoritos(){
+    let dados = localStorage.getItem("favoritos_" + usuarioAtual);
+
+    if(dados){
+        favoritos = JSON.parse(dados);
+        atualizarFavoritos();
+    }
+}
+
+function atualizarFavoritos(){
+    const area = document.getElementById("listaFavoritos");
+
+    area.innerHTML = "";
+
+    favoritos.forEach(item => {
+        let li = document.createElement("li");
+
+        li.innerHTML = item + " ✦";
+
+        area.appendChild(li);
+    });
+}
+
+// PEDIDOS
+
+function salvarPedidos(){
+    if(usuarioAtual){
+        localStorage.setItem(
+            "pedidos_" + usuarioAtual,
+            JSON.stringify(pedidos)
+        );
+    }
+}
+
+function carregarPedidos(){
+    let dados = localStorage.getItem("pedidos_" + usuarioAtual);
+
+    if(dados){
+        pedidos = JSON.parse(dados);
+        atualizarPedidos();
+    }
+}
+
+function atualizarPedidos(){
+    const area = document.getElementById("listaPedidos");
+
+    area.innerHTML = "";
+
+    pedidos.forEach(item => {
+        let li = document.createElement("li");
+        li.innerHTML = item;
+        area.appendChild(li);
+    });
+}
+
+// CHECKOUT
+
+window.finalizarPedido = function(){
+    if(carrinho.length === 0){
+        alert("Seu pedido está vazio ✦");
+        return;
+    }
+
+    const area = document.getElementById("checkoutLista");
+    const totalArea = document.getElementById("checkoutTotal");
+
+    area.innerHTML = "";
+
+    carrinho.forEach(item => {
+        let p = document.createElement("p");
+
+        p.innerHTML =
+        `✦ ${item.nome} — R$ ${item.preco.toLocaleString("pt-BR")}`;
+
+        area.appendChild(p);
+    });
+
+    totalArea.innerHTML =
+    `Total: R$ ${total.toLocaleString("pt-BR")}`;
+
+    document.getElementById("checkoutModal").style.display = "flex";
+}
+
+window.fecharCheckout = function(){
+    document.getElementById("checkoutModal").style.display = "none";
+}
+
+window.confirmarCheckout = function(){
+    let nome = document.getElementById("nomeCliente").value.trim();
+
+    let mensagem =
+    "Olá! Vim pelo Maylas Bridal e gostaria de finalizar meu pedido:%0A%0A";
+
+    carrinho.forEach(item => {
+        mensagem +=
+        `• ${item.nome} - R$ ${item.preco.toLocaleString("pt-BR")}%0A`;
+    });
+
+    mensagem +=
+    `%0ATotal: R$ ${total.toLocaleString("pt-BR")}`;
+
+    if(nome !== ""){
+        mensagem += `%0ACliente: ${nome}`;
+    }
+
+    if(usuarioAtual){
+        mensagem += `%0AConta: ${usuarioAtual}`;
+    }
+
+    pedidos.push(
+        `Pedido ✦ Total: R$ ${total.toLocaleString("pt-BR")}`
+    );
+
+    salvarPedidos();
+    atualizarPedidos();
+
+    window.open(
+        `https://wa.me/5511987595486?text=${mensagem}`,
+        "_blank"
+    );
+
+    fecharCheckout();
+}
+
+// MODAL
+
+window.abrirDetalhes = function(nome){
+    vestidoModalAtual = nome;
+
+    const vestido = vestidosDetalhes[nome];
+
+    document.getElementById("modalNome").innerHTML = nome;
+
+    document.getElementById("modalCategoria").innerHTML =
+    vestido.categoria;
+
+    document.getElementById("modalPreco").innerHTML =
+    "R$ " + vestido.preco.toLocaleString("pt-BR");
+
+    document.getElementById("modalDescricao").innerHTML =
+    vestido.descricao;
+
+    document.getElementById("modalImagem").src =
+    vestido.imagens[0];
+
+    const miniaturas = document.getElementById("miniaturas");
+
+    miniaturas.innerHTML = "";
+
+    vestido.imagens.forEach(imagem => {
+        let img = document.createElement("img");
+
+        img.src = imagem;
+
+        img.onclick = function(){
+            document.getElementById("modalImagem").src = imagem;
+        };
+
+        miniaturas.appendChild(img);
+    });
+
+    document.getElementById("modalVestido").style.display = "flex";
+}
+
+window.fecharModal = function(){
+    document.getElementById("modalVestido").style.display = "none";
+}
+
+window.adicionarModalCarrinho = function(){
+    const vestido = vestidosDetalhes[vestidoModalAtual];
+
+    adicionarCarrinho(
+        vestidoModalAtual,
+        vestido.preco
+    );
+
+    fecharModal();
 }
 
 // PESQUISA
 
-const pesquisa =
-document.getElementById("pesquisa");
+const pesquisa = document.getElementById("pesquisa");
 
-pesquisa.addEventListener(
-"keyup",
+pesquisa.addEventListener("keyup", function(){
+    let texto = pesquisa.value.toLowerCase();
+    let cards = document.querySelectorAll(".card");
 
-function(){
+    cards.forEach(card => {
+        let conteudo = card.innerText.toLowerCase();
 
-let texto =
-pesquisa.value.toLowerCase();
-
-let cards =
-document.querySelectorAll(".card");
-
-cards.forEach(card => {
-
-let conteudo =
-card.innerText.toLowerCase();
-
-if(
-conteudo.includes(texto)
-){
-
-card.style.display =
-"block";
-
-}
-
-else{
-
-card.style.display =
-"none";
-
-}
-
+        if(conteudo.includes(texto)){
+            card.style.display = "block";
+        }else{
+            card.style.display = "none";
+        }
+    });
 });
 
-});
+// ANIMAÇÕES
+
+const elementosAnimados =
+document.querySelectorAll(
+".card, .faq-item, .login-box, .carrinho, .favoritos, .historico"
+);
+
+function animarElementos(){
+    elementosAnimados.forEach(elemento => {
+        const topo = elemento.getBoundingClientRect().top;
+        const visivel = window.innerHeight - 80;
+
+        if(topo < visivel){
+            elemento.classList.add("mostrar");
+        }
+    });
+}
+
+window.addEventListener("scroll", animarElementos);
+
+animarElementos();
+window.esvaziarCarrinho = function(){
+
+    carrinho = [];
+    total = 0;
+
+    atualizarCarrinho();
+    salvarCarrinho();
+
+    alert("Carrinho esvaziado ✦");
+
+}
