@@ -533,4 +533,95 @@ footer{
         width:95%;
         padding:28px;
     }
+    /* LOADER */
+
+#loader{
+    position:fixed;
+    inset:0;
+    background:#050d18;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+    transition:1s;
+}
+
+#loader h1{
+    font-family:'Cinzel',serif;
+    color:#e4d2b3;
+    font-size:4rem;
+    animation:glow 2s infinite alternate;
+}
+
+#loader p{
+    color:#d9d4cb;
+    margin-top:10px;
+}
+
+.loader-hidden{
+    opacity:0;
+    visibility:hidden;
+}
+
+@keyframes glow{
+    from{
+        text-shadow:0 0 10px rgba(228,210,179,0.2);
+    }
+
+    to{
+        text-shadow:0 0 25px rgba(228,210,179,0.7);
+    }
+}
+
+/* PERFIL */
+
+.perfil{
+    background:#07111f;
+    text-align:center;
+}
+
+.perfil-box{
+    max-width:500px;
+    margin:0 auto;
+    background:#0d1a2e;
+    padding:30px;
+    border-radius:25px;
+    border:1px solid rgba(216,194,154,0.2);
+}
+
+.perfil-link{
+    display:block;
+    margin:12px auto;
+    padding:14px;
+    background:#d8c29a;
+    color:#07111f;
+    text-decoration:none;
+    border-radius:30px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.perfil-link:hover{
+    transform:translateY(-2px);
+}
+
+/* BOTÃO REMOVER */
+
+.remover-btn{
+    margin-left:15px;
+    background:linear-gradient(135deg,#541b1b,#6d2323);
+    color:white;
+    border:none;
+    padding:8px 14px;
+    border-radius:20px;
+    cursor:pointer;
+    font-size:0.85rem;
+    transition:0.3s;
+}
+
+.remover-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(109,35,35,0.35);
+}
 }
