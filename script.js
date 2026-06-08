@@ -10,7 +10,7 @@ import {
     signOut
 } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 
-// CONFIG
+// CONFIG FIREBASE
 
 const firebaseConfig = {
     apiKey: "AIzaSyDKqUt7ETARoGgHvPknJc4_vQquUq-w3Nk",
@@ -25,14 +25,43 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+// LOADER
+
+window.addEventListener("load", () => {
+    setTimeout(() => {
+        const loader =
+document.getElementById("loader");
+
+if(loader){
+    loader.classList.add(
+    "loader-hidden"
+    );
+}
+    }, 1600);
+});
+
 // VARIÁVEIS
 
 let carrinho = [];
 let favoritos = [];
 let pedidos = [];
 let total = 0;
+let frete = 0;
 let usuarioAtual = null;
 let vestidoModalAtual = null;
+
+// ESTOQUE
+
+let estoque = {
+    "New Moon": 5,
+    "Ariel Lace": 3,
+    "Aurora Lace": 4,
+    "Celestia": 2,
+    "Queen Garden": 3,
+    "Princess Bride": 5,
+    "Angel Bride": 4,
+    "Midnight Pearl": 2
+};
 
 // DETALHES DOS VESTIDOS
 
@@ -40,111 +69,83 @@ const vestidosDetalhes = {
     "New Moon":{
         categoria:"Noiva Celestial",
         preco:4900,
-        descricao:"Vestido etéreo inspirado na lua nova.",
-        imagens:[
-            "imagens/vestido1.jpeg",
-            "imagens/vestido1-2.jpeg",
-            "imagens/vestido1-3.jpeg"
-        ]
+        descricao:"Vestido etéreo inspirado na lua nova, com brilho suave e elegância celestial.",
+        imagens:["imagens/vestido1.jpeg","imagens/vestido1-2.jpeg","imagens/vestido1-3.jpeg"]
     },
 
     "Ariel Lace":{
         categoria:"Sereia da Lua",
         preco:3500,
-        descricao:"Silhueta sereia delicada e elegante.",
-        imagens:[
-            "imagens/vestido2.jpeg",
-            "imagens/vestido2-2.jpeg",
-            "imagens/vestido2-3.jpeg"
-        ]
+        descricao:"Silhueta sereia delicada com toque romântico e inspiração lunar.",
+        imagens:["imagens/vestido2.jpeg","imagens/vestido2-2.jpeg","imagens/vestido2-3.jpeg"]
     },
 
     "Aurora Lace":{
         categoria:"Renda Vintage",
         preco:4500,
-        descricao:"Renda clássica com romantismo atemporal.",
-        imagens:[
-            "imagens/vestido3.jpeg",
-            "imagens/vestido3-2.jpeg",
-            "imagens/vestido3-3.jpeg"
-        ]
+        descricao:"Renda clássica e sofisticada para uma noiva elegante e atemporal.",
+        imagens:["imagens/vestido3.jpeg","imagens/vestido3-2.jpeg","imagens/vestido3-3.jpeg"]
     },
 
     "Celestia":{
         categoria:"Cisney Rendado",
         preco:3100,
-        descricao:"Leveza celestial e acabamento sofisticado.",
-        imagens:[
-            "imagens/vestido4.jpeg",
-            "imagens/vestido4-2.jpeg",
-            "imagens/vestido4-3.jpeg"
-        ]
+        descricao:"Modelo leve e refinado com detalhes rendados e presença celestial.",
+        imagens:["imagens/vestido4.jpeg","imagens/vestido4-2.jpeg","imagens/vestido4-3.jpeg"]
     },
 
     "Queen Garden":{
         categoria:"Luxo fatal",
         preco:5800,
-        descricao:"Inspirado em jardins reais e romantismo dramático.",
-        imagens:[
-            "imagens/vestido5.jpeg",
-            "imagens/vestido5-2.jpeg",
-            "imagens/vestido5-3.jpeg"
-        ]
+        descricao:"Vestido imponente inspirado em jardins reais e romantismo dramático.",
+        imagens:["imagens/vestido5.jpeg","imagens/vestido5-2.jpeg","imagens/vestido5-3.jpeg"]
     },
 
     "Princess Bride":{
         categoria:"Romântico Clássico",
         preco:4700,
-        descricao:"Modelo princesa delicado e elegante.",
-        imagens:[
-            "imagens/vestido6.jpeg",
-            "imagens/vestido6-2.jpeg",
-            "imagens/vestido6-3.jpeg"
-        ]
+        descricao:"Modelo princesa com saia volumosa e delicadeza clássica.",
+        imagens:["imagens/vestido6.jpeg","imagens/vestido6-2.jpeg","imagens/vestido6-3.jpeg"]
     },
 
     "Angel Bride":{
         categoria:"Anjo floral",
         preco:4000,
-        descricao:"Vestido angelical com delicadeza floral.",
-        imagens:[
-            "imagens/vestido7.jpeg",
-            "imagens/vestido7-2.jpeg",
-            "imagens/vestido7-3.jpeg"
-        ]
+        descricao:"Vestido delicado com inspiração angelical e acabamento floral.",
+        imagens:["imagens/vestido7.jpeg","imagens/vestido7-2.jpeg","imagens/vestido7-3.jpeg"]
     },
 
     "Midnight Pearl":{
         categoria:"Noiva Mística",
         preco:4500,
-        descricao:"Elegância misteriosa inspirada na meia-noite.",
-        imagens:[
-            "imagens/vestido8.jpeg",
-            "imagens/vestido8-2.jpeg",
-            "imagens/vestido8-3.jpeg"
-        ]
+        descricao:"Elegância misteriosa inspirada no brilho das pérolas sob a meia-noite.",
+        imagens:["imagens/vestido8.jpeg","imagens/vestido8-2.jpeg","imagens/vestido8-3.jpeg"]
     }
 };
 
 // LOGIN
 
-onAuthStateChanged(auth, (user) => {document.getElementById("perfilEmail").innerHTML =
-    "Cliente conectada: " + usuarioAtual;
+onAuthStateChanged(auth, (user) => {
     if(user){
         usuarioAtual = user.email;
 
         document.getElementById("mensagemLogin").innerHTML =
         `Conta conectada: ${usuarioAtual} ✦`;
 
+        document.getElementById("perfilEmail").innerHTML =
+        `Cliente conectada: ${usuarioAtual}`;
+
         carregarCarrinho();
         carregarFavoritos();
         carregarPedidos();
-    }else{document.getElementById("perfilEmail").innerHTML =
-        "Entre na sua conta para ver seu perfil.";
+    }else{
         usuarioAtual = null;
 
         document.getElementById("mensagemLogin").innerHTML =
         "Nenhuma conta conectada.";
+
+        document.getElementById("perfilEmail").innerHTML =
+        "Entre na sua conta para ver seu perfil.";
     }
 });
 
@@ -179,9 +180,7 @@ window.login = function(){
 }
 
 window.sair = function(){
-    signOut(auth)
-    .then(() => {
-        usuarioAtual = null;
+    signOut(auth).then(() => {
         carrinho = [];
         favoritos = [];
         total = 0;
@@ -194,17 +193,46 @@ window.sair = function(){
     });
 }
 
+// ESTOQUE NA TELA
+
+function atualizarEstoque(){
+    Object.keys(estoque).forEach(nome => {
+        let ids = [
+            "estoque-" + nome,
+            "estoque-card-" + nome
+        ];
+
+        ids.forEach(id => {
+            let elemento = document.getElementById(id);
+
+            if(elemento){
+                if(estoque[nome] > 0){
+                    elemento.innerHTML = `Disponível: ${estoque[nome]} unidade(s)`;
+                    elemento.style.color = "#9fe6a0";
+                }else{
+                    elemento.innerHTML = "Esgotado";
+                    elemento.style.color = "#ff8f8f";
+                }
+            }
+        });
+    });
+}
+
 // CARRINHO
 
 window.adicionarCarrinho = function(nome, preco){
-    carrinho.push({
-        nome:nome,
-        preco:preco
-    });
+    if(estoque[nome] <= 0){
+        alert("Este vestido está esgotado ✦");
+        return;
+    }
 
+    carrinho.push({nome:nome, preco:preco});
     total += preco;
 
+    estoque[nome]--;
+
     atualizarCarrinho();
+    atualizarEstoque();
     salvarCarrinho();
 }
 
@@ -229,10 +257,7 @@ function atualizarCarrinho(){
 
 function salvarCarrinho(){
     if(usuarioAtual){
-        localStorage.setItem(
-            "carrinho_" + usuarioAtual,
-            JSON.stringify(carrinho)
-        );
+        localStorage.setItem("carrinho_" + usuarioAtual, JSON.stringify(carrinho));
     }
 }
 
@@ -250,7 +275,25 @@ function carregarCarrinho(){
     }
 }
 
-// FAVORITOS
+window.esvaziarCarrinho = function(){
+    carrinho.forEach(item => {
+        estoque[item.nome]++;
+    });
+
+    carrinho = [];
+    total = 0;
+    frete = 0;
+
+    atualizarCarrinho();
+    atualizarEstoque();
+    salvarCarrinho();
+
+    document.getElementById("resultadoFrete").innerHTML = "";
+
+    alert("Carrinho esvaziado ✦");
+}
+
+// FAVORITOS / LISTA DE DESEJOS
 
 window.favoritar = function(nome){
     if(!favoritos.includes(nome)){
@@ -263,10 +306,7 @@ window.favoritar = function(nome){
 
 function salvarFavoritos(){
     if(usuarioAtual){
-        localStorage.setItem(
-            "favoritos_" + usuarioAtual,
-            JSON.stringify(favoritos)
-        );
+        localStorage.setItem("favoritos_" + usuarioAtual, JSON.stringify(favoritos));
     }
 }
 
@@ -286,21 +326,31 @@ function atualizarFavoritos(){
 
     favoritos.forEach(item => {
         let li = document.createElement("li");
-
         li.innerHTML = item + " ✦";
-
         area.appendChild(li);
     });
+}
+
+window.compartilharDesejos = function(){
+    if(favoritos.length === 0){
+        alert("Sua lista de desejos está vazia ✦");
+        return;
+    }
+
+    let texto = "Minha lista de desejos Maylas Bridal:%0A%0A";
+
+    favoritos.forEach(item => {
+        texto += `✦ ${item}%0A`;
+    });
+
+    window.open(`https://wa.me/?text=${texto}`, "_blank");
 }
 
 // PEDIDOS
 
 function salvarPedidos(){
     if(usuarioAtual){
-        localStorage.setItem(
-            "pedidos_" + usuarioAtual,
-            JSON.stringify(pedidos)
-        );
+        localStorage.setItem("pedidos_" + usuarioAtual, JSON.stringify(pedidos));
     }
 }
 
@@ -325,7 +375,33 @@ function atualizarPedidos(){
     });
 }
 
-// CHECKOUT
+// FRETE SIMULADO
+
+window.calcularFrete = function(){
+    let cep = document.getElementById("cep").value.trim();
+
+    if(cep.length < 8){
+        alert("Digite um CEP válido com 8 números.");
+        return;
+    }
+
+    let primeiroNumero = cep.charAt(0);
+
+    if(primeiroNumero === "0" || primeiroNumero === "1"){
+        frete = 35;
+    }else if(primeiroNumero === "2" || primeiroNumero === "3"){
+        frete = 45;
+    }else{
+        frete = 65;
+    }
+
+    document.getElementById("resultadoFrete").innerHTML =
+    `Frete estimado: R$ ${frete.toLocaleString("pt-BR")}`;
+
+    atualizarCarrinho();
+}
+
+// CHECKOUT + PIX SIMULADO
 
 window.finalizarPedido = function(){
     if(carrinho.length === 0){
@@ -335,6 +411,7 @@ window.finalizarPedido = function(){
 
     const area = document.getElementById("checkoutLista");
     const totalArea = document.getElementById("checkoutTotal");
+    const freteArea = document.getElementById("checkoutFrete");
 
     area.innerHTML = "";
 
@@ -347,8 +424,13 @@ window.finalizarPedido = function(){
         area.appendChild(p);
     });
 
+    let totalFinal = total + frete;
+
     totalArea.innerHTML =
-    `Total: R$ ${total.toLocaleString("pt-BR")}`;
+    `Total dos vestidos: R$ ${total.toLocaleString("pt-BR")}`;
+
+    freteArea.innerHTML =
+    `Frete: R$ ${frete.toLocaleString("pt-BR")} | Total final: R$ ${totalFinal.toLocaleString("pt-BR")}`;
 
     document.getElementById("checkoutModal").style.display = "flex";
 }
@@ -357,8 +439,17 @@ window.fecharCheckout = function(){
     document.getElementById("checkoutModal").style.display = "none";
 }
 
+window.copiarPix = function(){
+    let chave = document.getElementById("chavePix").innerText;
+
+    navigator.clipboard.writeText(chave).then(() => {
+        alert("Chave Pix copiada ✦");
+    });
+}
+
 window.confirmarCheckout = function(){
     let nome = document.getElementById("nomeCliente").value.trim();
+    let totalFinal = total + frete;
 
     let mensagem =
     "Olá! Vim pelo Maylas Bridal e gostaria de finalizar meu pedido:%0A%0A";
@@ -368,8 +459,9 @@ window.confirmarCheckout = function(){
         `• ${item.nome} - R$ ${item.preco.toLocaleString("pt-BR")}%0A`;
     });
 
-    mensagem +=
-    `%0ATotal: R$ ${total.toLocaleString("pt-BR")}`;
+    mensagem += `%0AFrete: R$ ${frete.toLocaleString("pt-BR")}`;
+    mensagem += `%0ATotal final: R$ ${totalFinal.toLocaleString("pt-BR")}`;
+    mensagem += `%0AChave Pix: maylasbridal@pix.com`;
 
     if(nome !== ""){
         mensagem += `%0ACliente: ${nome}`;
@@ -380,7 +472,7 @@ window.confirmarCheckout = function(){
     }
 
     pedidos.push(
-        `Pedido ✦ Total: R$ ${total.toLocaleString("pt-BR")}`
+        `Pedido ✦ Total: R$ ${totalFinal.toLocaleString("pt-BR")}`
     );
 
     salvarPedidos();
@@ -394,7 +486,7 @@ window.confirmarCheckout = function(){
     fecharCheckout();
 }
 
-// MODAL
+// MODAL DETALHES
 
 window.abrirDetalhes = function(nome){
     vestidoModalAtual = nome;
@@ -402,18 +494,13 @@ window.abrirDetalhes = function(nome){
     const vestido = vestidosDetalhes[nome];
 
     document.getElementById("modalNome").innerHTML = nome;
-
-    document.getElementById("modalCategoria").innerHTML =
-    vestido.categoria;
-
+    document.getElementById("modalCategoria").innerHTML = vestido.categoria;
     document.getElementById("modalPreco").innerHTML =
     "R$ " + vestido.preco.toLocaleString("pt-BR");
-
-    document.getElementById("modalDescricao").innerHTML =
-    vestido.descricao;
-
-    document.getElementById("modalImagem").src =
-    vestido.imagens[0];
+    document.getElementById("modalDescricao").innerHTML = vestido.descricao;
+    document.getElementById("modalImagem").src = vestido.imagens[0];
+    document.getElementById("modalEstoque").innerHTML =
+    estoque[nome] > 0 ? `Disponível: ${estoque[nome]} unidade(s)` : "Esgotado";
 
     const miniaturas = document.getElementById("miniaturas");
 
@@ -421,7 +508,6 @@ window.abrirDetalhes = function(nome){
 
     vestido.imagens.forEach(imagem => {
         let img = document.createElement("img");
-
         img.src = imagem;
 
         img.onclick = function(){
@@ -489,14 +575,4 @@ function animarElementos(){
 window.addEventListener("scroll", animarElementos);
 
 animarElementos();
-window.esvaziarCarrinho = function(){
-
-    carrinho = [];
-    total = 0;
-
-    atualizarCarrinho();
-    salvarCarrinho();
-
-    alert("Carrinho esvaziado ✦");
-
-}
+atualizarEstoque();
