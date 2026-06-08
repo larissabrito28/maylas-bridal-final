@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,83 +10,82 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-<!-- LOADER -->
-
-<div id="loader">
-    <h1>Maylas Bridal</h1>
-    <p>Noivas Abençoadas sob a luz da lua ✦</p>
-</div>
-
-<header>
-    <div class="logo">
-        <h1>Maylas Bridal</h1>
-        <p>Fundado por May & Lay</p>
-    </div>
+    <header>
+        <div class="logo">
+            <h1>Maylas Bridal</h1>
+            <p>Fundado por May & Lay</p>
+        </div>
 
     <nav>
         <a href="#catalogo">Coleção</a>
         <a href="#destaques">Destaques</a>
         <a href="#login">Entrar ✦</a>
-        <a href="#perfil">Perfil</a>
         <a href="#faq">FAQ</a>
     </nav>
 </header>
 
-<section class="hero">
-    <div class="hero-text">
-        <h2>Vestidos de noiva para histórias escritas à luz da lua.</h2>
-        <p>Elegância etérea, romantismo clássico e vestidos feitos para momentos eternos.</p>
-        <a href="#catalogo" class="btn">Explorar Coleção</a>
-    </div>
-</section>
+    <section class="hero">
+        <div class="hero-text">
+            <h2>Vestidos de noiva para histórias escritas à luz da lua.</h2>
+            <p>Elegância etérea, romantismo clássico e vestidos feitos para momentos eternos.</p>
+            <a href="#catalogo" class="btn">Explorar Coleção</a>
+        </div>
+    </section>
 
-<section id="login" class="login">
-    <h2>Minha Conta ✦</h2>
+    <!-- LOGIN -->
 
-    <div class="login-box">
-        <input type="email" placeholder="Seu email" id="email">
-        <input type="password" placeholder="Senha" id="senha">
+    <section id="login" class="login">
+        <h2>Minha Conta ✦</h2>
 
-        <button onclick="login()">Entrar</button>
-        <button onclick="cadastro()" class="cadastro-btn">Criar Conta</button>
+        <div class="login-box">
+            <input type="email" placeholder="Seu email" id="email">
+            <input type="password" placeholder="Senha" id="senha">
 
-        <p id="mensagemLogin"></p>
+            <button onclick="login()">Entrar</button>
+
+            <button onclick="cadastro()" class="cadastro-btn">
+                Criar Conta
+            </button>
+
+            <p id="mensagemLogin"></p>
 
         <button onclick="sair()" class="sair-btn">Sair da conta</button>
     </div>
 </section>
-
 <section id="perfil" class="perfil">
     <h2>Meu Perfil ✦</h2>
 
     <div class="perfil-box">
         <p id="perfilEmail">Entre na sua conta para ver seu perfil.</p>
-         <a href="#favoritos" class="perfil-link">Ver Favoritos</a>
-<a href="#carrinho" class="perfil-link">Ver Carrinho</a>
-<a href="#historico" class="perfil-link">Ver Pedidos</a>
+
+        <a href="#listaFavoritos" class="perfil-link">Ver Favoritos</a>
+        <a href="#listaCarrinho" class="perfil-link">Ver Carrinho</a>
+        <a href="#listaPedidos" class="perfil-link">Ver Pedidos</a>
+    </div>
 </section>
 
-<section class="pesquisa">
-    <h2>Encontre seu vestido ✦</h2>
-    <input type="text" id="pesquisa" placeholder="nome ou estilo...">
-</section>
+    <section class="pesquisa">
+        <h2>Encontre seu vestido ✦</h2>
+        <input type="text" id="pesquisa" placeholder="nome ou estilo...">
+    </section>
 
-<section id="destaques">
-    <h2>Destaques da Coleção ✦</h2>
+    <!-- DESTAQUES -->
+
+    <section id="destaques">
+        <h2>Destaques da Coleção ✦</h2>
 
     <div class="produtos">
-
         <div class="card">
             <img src="imagens/vestido1.jpeg" alt="New Moon">
             <h3>New Moon</h3>
             <p class="categoria">Noiva Celestial</p>
             <p class="preco">R$ 4.900</p>
-            <p class="estoque" id="estoque-New Moon"></p>
             <button onclick="adicionarCarrinho('New Moon',4900)">Adicionar</button>
             <button onclick="abrirDetalhes('New Moon')" class="detalhes-btn">Ver Detalhes ✦</button>
             <button onclick="favoritar('New Moon')" class="favorito-btn">Favoritar ✦</button>
@@ -96,26 +96,23 @@
             <h3>Ariel Lace</h3>
             <p class="categoria">Sereia da Lua</p>
             <p class="preco">R$ 3.500</p>
-            <p class="estoque" id="estoque-Ariel Lace"></p>
             <button onclick="adicionarCarrinho('Ariel Lace',3500)">Adicionar</button>
             <button onclick="abrirDetalhes('Ariel Lace')" class="detalhes-btn">Ver Detalhes ✦</button>
             <button onclick="favoritar('Ariel Lace')" class="favorito-btn">Favoritar ✦</button>
         </div>
-
     </div>
 </section>
 
-<section id="catalogo">
-    <h2>Coleção Bridal ✦</h2>
+    <section id="catalogo">
+        <h2>Coleção Bridal ✦</h2>
 
-    <div class="produtos">
+        <div class="produtos">
 
         <div class="card">
             <img src="imagens/vestido1.jpeg" alt="New Moon">
             <h3>New Moon</h3>
             <p class="categoria">Noiva Celestial</p>
             <p class="preco">R$ 4.900</p>
-            <p class="estoque" id="estoque-card-New Moon"></p>
             <button onclick="adicionarCarrinho('New Moon',4900)">Adicionar</button>
             <button onclick="abrirDetalhes('New Moon')" class="detalhes-btn">Ver Detalhes ✦</button>
             <button onclick="favoritar('New Moon')" class="favorito-btn">Favoritar ✦</button>
@@ -126,7 +123,6 @@
             <h3>Ariel Lace</h3>
             <p class="categoria">Sereia da Lua</p>
             <p class="preco">R$ 3.500</p>
-            <p class="estoque" id="estoque-card-Ariel Lace"></p>
             <button onclick="adicionarCarrinho('Ariel Lace',3500)">Adicionar</button>
             <button onclick="abrirDetalhes('Ariel Lace')" class="detalhes-btn">Ver Detalhes ✦</button>
             <button onclick="favoritar('Ariel Lace')" class="favorito-btn">Favoritar ✦</button>
@@ -137,7 +133,6 @@
             <h3>Aurora Lace</h3>
             <p class="categoria">Renda Vintage</p>
             <p class="preco">R$ 4.500</p>
-            <p class="estoque" id="estoque-card-Aurora Lace"></p>
             <button onclick="adicionarCarrinho('Aurora Lace',4500)">Adicionar</button>
             <button onclick="abrirDetalhes('Aurora Lace')" class="detalhes-btn">Ver Detalhes ✦</button>
             <button onclick="favoritar('Aurora Lace')" class="favorito-btn">Favoritar ✦</button>
@@ -148,7 +143,6 @@
             <h3>Celestia</h3>
             <p class="categoria">Cisney Rendado</p>
             <p class="preco">R$ 3.100</p>
-            <p class="estoque" id="estoque-card-Celestia"></p>
             <button onclick="adicionarCarrinho('Celestia',3100)">Adicionar</button>
             <button onclick="abrirDetalhes('Celestia')" class="detalhes-btn">Ver Detalhes ✦</button>
             <button onclick="favoritar('Celestia')" class="favorito-btn">Favoritar ✦</button>
@@ -159,7 +153,6 @@
             <h3>Queen Garden</h3>
             <p class="categoria">Luxo fatal</p>
             <p class="preco">R$ 5.800</p>
-            <p class="estoque" id="estoque-card-Queen Garden"></p>
             <button onclick="adicionarCarrinho('Queen Garden',5800)">Adicionar</button>
             <button onclick="abrirDetalhes('Queen Garden')" class="detalhes-btn">Ver Detalhes ✦</button>
             <button onclick="favoritar('Queen Garden')" class="favorito-btn">Favoritar ✦</button>
@@ -170,7 +163,6 @@
             <h3>Princess Bride</h3>
             <p class="categoria">Romântico Clássico</p>
             <p class="preco">R$ 4.700</p>
-            <p class="estoque" id="estoque-card-Princess Bride"></p>
             <button onclick="adicionarCarrinho('Princess Bride',4700)">Adicionar</button>
             <button onclick="abrirDetalhes('Princess Bride')" class="detalhes-btn">Ver Detalhes ✦</button>
             <button onclick="favoritar('Princess Bride')" class="favorito-btn">Favoritar ✦</button>
@@ -181,7 +173,6 @@
             <h3>Angel Bride</h3>
             <p class="categoria">Anjo floral</p>
             <p class="preco">R$ 4.000</p>
-            <p class="estoque" id="estoque-card-Angel Bride"></p>
             <button onclick="adicionarCarrinho('Angel Bride',4000)">Adicionar</button>
             <button onclick="abrirDetalhes('Angel Bride')" class="detalhes-btn">Ver Detalhes ✦</button>
             <button onclick="favoritar('Angel Bride')" class="favorito-btn">Favoritar ✦</button>
@@ -192,107 +183,83 @@
             <h3>Midnight Pearl</h3>
             <p class="categoria">Noiva Mística</p>
             <p class="preco">R$ 4.500</p>
-            <p class="estoque" id="estoque-card-Midnight Pearl"></p>
             <button onclick="adicionarCarrinho('Midnight Pearl',4500)">Adicionar</button>
             <button onclick="abrirDetalhes('Midnight Pearl')" class="detalhes-btn">Ver Detalhes ✦</button>
             <button onclick="favoritar('Midnight Pearl')" class="favorito-btn">Favoritar ✦</button>
         </div>
 
-    </div>
-</section>
+        </div>
+    </section>
 
-<section id="carrinho" class="carrinho">
+    <!-- CARRINHO -->
 
-</section>
+<section class="carrinho">
     <h2>Seu Pedido ✦</h2>
-
     <ul id="listaCarrinho"></ul>
-
     <h3 id="total">Total: R$ 0</h3>
 
-    <div class="frete-box">
-        <input type="text" id="cep" placeholder="Digite seu CEP">
-        <button onclick="calcularFrete()" class="finalizar-btn">Calcular Frete ✦</button>
-        <p id="resultadoFrete"></p>
-    </div>
-
     <button onclick="finalizarPedido()" class="finalizar-btn">
-        Finalizar Pedido ✦
-    </button>
-
-    <button onclick="esvaziarCarrinho()" class="limpar-btn">
-        Esvaziar Carrinho
+        <button onclick="esvaziarCarrinho()" class="limpar-btn">
+            Esvaziar Carrinho
+        </button>
+        Finalizar Pedido pelo WhatsApp ✦
     </button>
 </section>
 
-<section id="favoritos" class="favoritos">
-
-</section>
+<section class="favoritos">
     <h2>Meus Favoritos ✦</h2>
     <ul id="listaFavoritos"></ul>
-
-    <button onclick="compartilharDesejos()" class="finalizar-btn">
-        Compartilhar Lista de Desejos ✦
-    </button>
 </section>
 
-<section id="historico" class="historico">
-
-</section>
+<section class="historico">
     <h2>Meus Pedidos ✦</h2>
     <ul id="listaPedidos"></ul>
 </section>
 
-<section id="faq">
-    <h2>FAQ ✦</h2>
+    <section id="faq">
+        <h2>FAQ ✦</h2>
 
-    <div class="faq-item">
-        <h3>Fazem vestidos sob medida?</h3>
-        <p>Sim, criamos modelos exclusivos e personalizados.</p>
-    </div>
+        <div class="faq-item">
+            <h3>Fazem vestidos sob medida?</h3>
+            <p>Sim, criamos modelos exclusivos e personalizados.</p>
+        </div>
 
-    <div class="faq-item">
-        <h3>Qual o prazo?</h3>
-        <p>O prazo depende do modelo e da personalização.</p>
-    </div>
+        <div class="faq-item">
+            <h3>Qual o prazo?</h3>
+            <p>O prazo depende do modelo e da personalização.</p>
+        </div>
 
     <div class="faq-item">
         <h3>Como funciona a encomenda?</h3>
         <p>O atendimento e orçamento acontecem pelo WhatsApp.</p>
     </div>
-
-    <div class="faq-item">
-        <h3>O Pix é automático?</h3>
-        <p>Nesta versão, o Pix é uma simulação de checkout para apresentação do TCC.</p>
-    </div>
 </section>
 
-<section class="contato">
-    <h2>Deseja um vestido exclusivo?</h2>
+    <section class="contato">
+        <h2>Deseja um vestido exclusivo?</h2>
 
     <a
         class="whats"
         href="https://wa.me/5511987595486?text=Olá! Vim pelo Maylas Bridal e gostaria de conversar sobre um vestido de noiva."
         target="_blank">
         Agendar Atendimento ✦
+        <a href="#perfil">Meu Perfil ✦</a>
+
     </a>
 </section>
 
-<!-- MODAL DETALHES -->
+    <section id="modalVestido" class="modal">
+        <div class="modal-content">
+            <span onclick="fecharModal()" class="fechar">&times;</span>
 
-<section id="modalVestido" class="modal">
-    <div class="modal-content">
-        <span onclick="fecharModal()" class="fechar">&times;</span>
+            <img id="modalImagem" src="" alt="Imagem do vestido">
 
-        <img id="modalImagem" src="" alt="Imagem do vestido">
-
-        <div class="miniaturas" id="miniaturas"></div>
+            <div class="miniaturas" id="miniaturas"></div>
 
         <h2 id="modalNome"></h2>
         <p id="modalCategoria"></p>
         <h3 id="modalPreco"></h3>
         <p id="modalDescricao"></p>
-        <p id="modalEstoque"></p>
 
         <button onclick="adicionarModalCarrinho()" class="finalizar-btn">
             Adicionar ao Pedido ✦
@@ -300,43 +267,36 @@
     </div>
 </section>
 
-<!-- MODAL CHECKOUT -->
-
 <section id="checkoutModal" class="modal">
     <div class="modal-content">
-        <span onclick="fecharCheckout()" class="fechar">&times;</span>
 
-        <h2>Finalizar Pedido ✦</h2>
+        <span onclick="fecharCheckout()" class="fechar">
+            &times;
+        </span>
 
-        <div id="checkoutLista"></div>
+            <h2>Finalizar Pedido ✦</h2>
 
-        <h3 id="checkoutTotal"></h3>
+            <div id="checkoutLista"></div>
 
-        <p id="checkoutFrete"></p>
+            <h3 id="checkoutTotal"></h3>
 
-        <input type="text" id="nomeCliente" placeholder="Seu nome">
-
-        <div class="pix-box">
-            <h3>Pagamento Pix ✦</h3>
-            <p>Chave Pix simulada:</p>
-            <strong id="chavePix">maylasbridal@pix.com</strong>
-            <button onclick="copiarPix()" class="finalizar-btn">Copiar Chave Pix</button>
-        </div>
+        <input
+        type="text"
+        id="nomeCliente"
+        placeholder="Seu nome">
 
         <button onclick="confirmarCheckout()" class="finalizar-btn">
-            Confirmar Pedido no WhatsApp ✦
+            Confirmar Pedido ✦
         </button>
+
     </div>
 </section>
-<div class="cursor"></div>
-<div class="cursor-blur"></div>
 
-<div id="toast"></div>
 <footer>
     <p>© 2026 Maylas Bridal | Fundado por May & Lay</p>
 </footer>
 
-<script type="module" src="script.js"></script>
+    <script type="module" src="script.js"></script>
 
 </body>
 </html>
