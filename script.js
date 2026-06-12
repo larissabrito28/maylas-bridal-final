@@ -66,7 +66,6 @@ let estoque = {
 // DETALHES DOS VESTIDOS
 
 const vestidosDetalhes = {
-<<<<<<< HEAD
     "New Moon":{
         categoria:"Noiva Celestial",
         preco:4900,
@@ -121,104 +120,12 @@ const vestidosDetalhes = {
         preco:4500,
         descricao:"Elegância misteriosa inspirada no brilho das pérolas sob a meia-noite.",
         imagens:["imagens/vestido8.jpeg","imagens/vestido8-2.jpeg","imagens/vestido8-3.jpeg"]
-=======
-    "New Moon": {
-        categoria: "Noiva Celestial",
-        preco: 4900,
-        descricao: "Vestido etéreo inspirado na lua nova.",
-        imagens: [
-            "imagens/vestido1.jpeg",
-            "imagens/vestido1-2.jpeg",
-            "imagens/vestido1-3.jpeg"
-        ]
-    },
-
-    "Ariel Lace": {
-        categoria: "Sereia da Lua",
-        preco: 3500,
-        descricao: "Silhueta sereia delicada e elegante.",
-        imagens: [
-            "imagens/vestido2.jpeg",
-            "imagens/vestido2-2.jpeg",
-            "imagens/vestido2-3.jpeg"
-        ]
-    },
-
-    "Aurora Lace": {
-        categoria: "Renda Vintage",
-        preco: 4500,
-        descricao: "Renda clássica com romantismo atemporal.",
-        imagens: [
-            "imagens/vestido3.jpeg",
-            "imagens/vestido3-2.jpeg",
-            "imagens/vestido3-3.jpeg"
-        ]
-    },
-
-    "Celestia": {
-        categoria: "Cisney Rendado",
-        preco: 3100,
-        descricao: "Leveza celestial e acabamento sofisticado.",
-        imagens: [
-            "imagens/vestido4.jpeg",
-            "imagens/vestido4-2.jpeg",
-            "imagens/vestido4-3.jpeg"
-        ]
-    },
-
-    "Queen Garden": {
-        categoria: "Luxo fatal",
-        preco: 5800,
-        descricao: "Inspirado em jardins reais e romantismo dramático.",
-        imagens: [
-            "imagens/vestido5.jpeg",
-            "imagens/vestido5-2.jpeg",
-            "imagens/vestido5-3.jpeg"
-        ]
-    },
-
-    "Princess Bride": {
-        categoria: "Romântico Clássico",
-        preco: 4700,
-        descricao: "Modelo princesa delicado e elegante.",
-        imagens: [
-            "imagens/vestido6.jpeg",
-            "imagens/vestido6-2.jpeg",
-            "imagens/vestido6-3.jpeg"
-        ]
-    },
-
-    "Angel Bride": {
-        categoria: "Anjo floral",
-        preco: 4000,
-        descricao: "Vestido angelical com delicadeza floral.",
-        imagens: [
-            "imagens/vestido7.jpeg",
-            "imagens/vestido7-2.jpeg",
-            "imagens/vestido7-3.jpeg"
-        ]
-    },
-
-    "Midnight Pearl": {
-        categoria: "Noiva Mística",
-        preco: 4500,
-        descricao: "Elegância misteriosa inspirada na meia-noite.",
-        imagens: [
-            "imagens/vestido8.jpeg",
-            "imagens/vestido8-2.jpeg",
-            "imagens/vestido8-3.jpeg"
-        ]
->>>>>>> 3d34dd7fc5fa28822509c3c6836ea2d9b4f9518d
     }
 };
 
 // LOGIN
 
 onAuthStateChanged(auth, (user) => {
-<<<<<<< HEAD
-=======
-
->>>>>>> 3d34dd7fc5fa28822509c3c6836ea2d9b4f9518d
     if(user){
 
         usuarioAtual = user.email;
@@ -227,16 +134,11 @@ onAuthStateChanged(auth, (user) => {
         `Conta conectada: ${usuarioAtual} ✦`;
 
         document.getElementById("perfilEmail").innerHTML =
-<<<<<<< HEAD
         `Cliente conectada: ${usuarioAtual}`;
-=======
-        "Cliente conectada: " + usuarioAtual;
->>>>>>> 3d34dd7fc5fa28822509c3c6836ea2d9b4f9518d
 
         carregarCarrinho();
         carregarFavoritos();
         carregarPedidos();
-<<<<<<< HEAD
     }else{
         usuarioAtual = null;
 
@@ -279,13 +181,7 @@ window.login = function(){
 }
 
 window.sair = function(){
-    signOut(auth).then(() => {
-=======
-
-    }else{
-
-        usuarioAtual = null;
->>>>>>> 3d34dd7fc5fa28822509c3c6836ea2d9b4f9518d
+    signOut(auth).then() => {
         carrinho = [];
         favoritos = [];
         pedidos = [];
@@ -301,8 +197,7 @@ window.sair = function(){
         document.getElementById("perfilEmail").innerHTML =
         "Entre na sua conta para ver seu perfil.";
     }
-
-});
+};
 
 window.cadastro = function(){
 
@@ -394,18 +289,10 @@ function atualizarEstoque(){
 // CARRINHO
 
 window.adicionarCarrinho = function(nome, preco){
-<<<<<<< HEAD
     if(estoque[nome] <= 0){
         alert("Este vestido está esgotado ✦");
         return;
     }
-=======
-
-    carrinho.push({
-        nome: nome,
-        preco: preco
-    });
->>>>>>> 3d34dd7fc5fa28822509c3c6836ea2d9b4f9518d
 
     carrinho.push({nome:nome, preco:preco});
     total += preco;
@@ -470,16 +357,7 @@ window.esvaziarCarrinho = function(){
 function salvarCarrinho(){
 
     if(usuarioAtual){
-<<<<<<< HEAD
         localStorage.setItem("carrinho_" + usuarioAtual, JSON.stringify(carrinho));
-=======
-
-        localStorage.setItem(
-            "carrinho_" + usuarioAtual,
-            JSON.stringify(carrinho)
-        );
-
->>>>>>> 3d34dd7fc5fa28822509c3c6836ea2d9b4f9518d
     }
 
 }
@@ -531,7 +409,6 @@ window.favoritar = function(nome){
     salvarFavoritos();
     atualizarFavoritos();
 
-<<<<<<< HEAD
 function salvarFavoritos(){
     if(usuarioAtual){
         localStorage.setItem("favoritos_" + usuarioAtual, JSON.stringify(favoritos));
@@ -545,8 +422,6 @@ function carregarFavoritos(){
         favoritos = JSON.parse(dados);
         atualizarFavoritos();
     }
-=======
->>>>>>> 3d34dd7fc5fa28822509c3c6836ea2d9b4f9518d
 }
 
 function atualizarFavoritos(){
@@ -558,17 +433,7 @@ function atualizarFavoritos(){
     favoritos.forEach((item, index) => {
 
         let li = document.createElement("li");
-<<<<<<< HEAD
         li.innerHTML = item + " ✦";
-=======
-
-        li.innerHTML =
-        `${item} ✦
-        <button onclick="removerFavorito(${index})" class="remover-btn">
-            Remover
-        </button>`;
-
->>>>>>> 3d34dd7fc5fa28822509c3c6836ea2d9b4f9518d
         area.appendChild(li);
 
     });
@@ -630,16 +495,7 @@ window.compartilharDesejos = function(){
 function salvarPedidos(){
 
     if(usuarioAtual){
-<<<<<<< HEAD
         localStorage.setItem("pedidos_" + usuarioAtual, JSON.stringify(pedidos));
-=======
-
-        localStorage.setItem(
-            "pedidos_" + usuarioAtual,
-            JSON.stringify(pedidos)
-        );
-
->>>>>>> 3d34dd7fc5fa28822509c3c6836ea2d9b4f9518d
     }
 
 }
@@ -903,23 +759,4 @@ function animarElementos(){
 window.addEventListener("scroll", animarElementos);
 
 animarElementos();
-<<<<<<< HEAD
 atualizarEstoque();
-=======
-
-// LOADER
-
-window.addEventListener("load", () => {
-
-    setTimeout(() => {
-
-        const loader = document.getElementById("loader");
-
-        if(loader){
-            loader.classList.add("loader-hidden");
-        }
-
-    }, 1800);
-
-});
->>>>>>> 3d34dd7fc5fa28822509c3c6836ea2d9b4f9518d
